@@ -1,0 +1,21 @@
+---
+- name: Add some objects to the firewall
+  hosts: all
+  connection: local
+  gather_facts: False
+
+  vars:
+    provider:
+       ip_address: "{{ inventory_hostname }}"
+       username: "testuser"
+       password: "testpw"
+       port: "443"
+
+  tasks:
+    - paloaltonetworks.panos.panos_address_object:
+        provider: '{{ provider }}'
+        name: 'test-address'
+        value: '192.168.100.89/24'
+        address_type: 'ip-netmask'
+        description: 'This is a test address object'
+        commit: N
